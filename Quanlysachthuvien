@@ -1,0 +1,67 @@
+import java.util.Scanner; // Khai báo thư viện Scanner để phục vụ việc nhập dữ liệu từ bàn phím
+
+public class QuanLySachChiTiet {
+    public static void main(String[] args) {
+        // Khởi tạo đối tượng Scanner để đọc dữ liệu người dùng nhập vào
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("=== CHƯƠNG TRÌNH QUẢN LÝ SÁCH THƯ VIỆN ===");
+        
+        // ==========================================
+        // BÀI 1: Nhập thông tin sách từ bàn phím
+        // ==========================================
+        System.out.print("Nhập mã sách: ");
+        String maSach = scanner.nextLine(); // Đọc dữ liệu kiểu chuỗi (String) cho mã sách
+        
+        System.out.print("Nhập tên sách: ");
+        String tenSach = scanner.nextLine(); // Đọc dữ liệu kiểu chuỗi cho tên sách
+        
+        System.out.print("Nhập tác giả: ");
+        String tacGia = scanner.nextLine(); // Đọc dữ liệu kiểu chuỗi cho tác giả
+        
+        System.out.print("Nhập năm xuất bản: ");
+        int namXuatBan = Integer.parseInt(scanner.nextLine()); // Ép kiểu sang số nguyên (int) cho năm xuất bản
+        
+        System.out.print("Nhập đơn giá: ");
+        double donGia = Double.parseDouble(scanner.nextLine()); // Ép kiểu sang số thực (double) cho đơn giá
+        
+        System.out.print("Nhập số lượng: ");
+        int soLuong = Integer.parseInt(scanner.nextLine()); // Ép kiểu sang số nguyên (int) cho số lượng
+
+        // ==========================================
+        // BÀI 2: Tính thành tiền = đơn giá × số lượng
+        // ==========================================
+        double thanhTien = donGia * soLuong;
+
+        // ==========================================
+        // BÀI 3: Phí vận chuyển = 5% giá trị sách (thành tiền)
+        // ==========================================
+        double phiVanChuyen = thanhTien * 0.05;
+
+        // ==========================================
+        // BÀI 4: Tổng tiền nhập = Thành tiền + Phí vận chuyển
+        // ==========================================
+        double tongTienNhap = thanhTien + phiVanChuyen;
+
+        // ==========================================
+        // HIỂN THỊ KẾT QUẢ RA MÀN HÌNH
+        // ==========================================
+        System.out.println("\n==================================================");
+        System.out.println("          KẾT QUẢ THỰC HIỆN NHẬP KHO SÁCH          ");
+        System.out.println("==================================================");
+        System.out.println("- Mã sách         : " + maSach);
+        System.out.println("- Tên sách        : " + tenSach);
+        System.out.println("- Tác giả         : " + tacGia);
+        System.out.println("- Năm xuất bản    : " + namXuatBan);
+        System.out.println("- Đơn giá         : " + donGia);
+        System.out.println("- Số lượng        : " + soLuong);
+        System.out.println("--------------------------------------------------");
+        System.out.println("- Thành tiền      : " + thanhTien);     // Kết quả Bài 2[cite: 3]
+        System.out.println("- Phí vận chuyển  : " + phiVanChuyen);  // Kết quả Bài 3[cite: 3]
+        System.out.println("- Tổng tiền nhập  : " + tongTienNhap);  // Kết quả Bài 4[cite: 3]
+        System.out.println("==================================================");
+
+        // Đóng đối tượng Scanner để giải phóng bộ nhớ và tài nguyên hệ thống
+        scanner.close();
+    }
+}
