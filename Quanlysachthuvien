@@ -1,67 +1,132 @@
-import java.util.Scanner; // Khai báo thư viện Scanner để phục vụ việc nhập dữ liệu từ bàn phím
+import java.util.Scanner; // Khai báo thư viện Scanner để nhập dữ liệu từ bàn phím
+import java.time.Year;    // Khai báo thư viện để lấy năm hiện tại phục vụ kiểm tra năm xuất bản
 
-public class QuanLySachChiTiet {
+public class QuanLySachDieuKien {
     public static void main(String[] args) {
         // Khởi tạo đối tượng Scanner để đọc dữ liệu người dùng nhập vào
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== CHƯƠNG TRÌNH QUẢN LÝ SÁCH THƯ VIỆN ===");
+        System.out.println("=== CHƯƠNG TRÌNH QUẢN LÝ SÁCH THƯ VIỆN (CẤU TRÚC ĐIỀU KIỆN) ===");
         
         // ==========================================
-        // BÀI 1: Nhập thông tin sách từ bàn phím
+        // NHẬP THÔNG TIN CƠ BẢN (Kế thừa từ Tuần 3)
         // ==========================================
         System.out.print("Nhập mã sách: ");
-        String maSach = scanner.nextLine(); // Đọc dữ liệu kiểu chuỗi (String) cho mã sách
+        String maSach = scanner.nextLine();
         
         System.out.print("Nhập tên sách: ");
-        String tenSach = scanner.nextLine(); // Đọc dữ liệu kiểu chuỗi cho tên sách
+        String tenSach = scanner.nextLine();
         
         System.out.print("Nhập tác giả: ");
-        String tacGia = scanner.nextLine(); // Đọc dữ liệu kiểu chuỗi cho tác giả
+        String tacGia = scanner.nextLine();
         
         System.out.print("Nhập năm xuất bản: ");
-        int namXuatBan = Integer.parseInt(scanner.nextLine()); // Ép kiểu sang số nguyên (int) cho năm xuất bản
+        int namXuatBan = Integer.parseInt(scanner.nextLine());
         
         System.out.print("Nhập đơn giá: ");
-        double donGia = Double.parseDouble(scanner.nextLine()); // Ép kiểu sang số thực (double) cho đơn giá
+        double donGia = Double.parseDouble(scanner.nextLine());
         
         System.out.print("Nhập số lượng: ");
-        int soLuong = Integer.parseInt(scanner.nextLine()); // Ép kiểu sang số nguyên (int) cho số lượng
+        int soLuong = Integer.parseInt(scanner.nextLine());
 
         // ==========================================
-        // BÀI 2: Tính thành tiền = đơn giá × số lượng
+        // BÀI 4: Dùng switch chọn loại sách[cite: 5]
         // ==========================================
+        System.out.println("\n--- CHỌN LOẠI SÁCH ---");
+        System.out.println("1. Sách giáo khoa");
+        System.out.println("2. Sách tham khảo");
+        System.out.println("3. Sách chuyên ngành");
+        System.out.println("4. Sách khác");
+        System.out.print("Nhập lựa chọn của bạn (1-4): ");
+        int chonLoai = Integer.parseInt(scanner.nextLine());
+        String tenLoaiSach = "";
+
+        switch (chonLoai) {
+            case 1:
+                tenLoaiSach = "Sách giáo khoa";
+                break;
+            case 2:
+                tenLoaiSach = "Sách tham khảo";
+                break;
+            case 3:
+                tenLoaiSach = "Sách chuyên ngành";
+                break;
+            case 4:
+                tenLoaiSach = "Sách khác";
+                break;
+            default:
+                tenLoaiSach = "Không xác định";
+                break;
+        }
+
+        // Tính toán các giá trị tài chính
         double thanhTien = donGia * soLuong;
-
-        // ==========================================
-        // BÀI 3: Phí vận chuyển = 5% giá trị sách (thành tiền)
-        // ==========================================
         double phiVanChuyen = thanhTien * 0.05;
-
-        // ==========================================
-        // BÀI 4: Tổng tiền nhập = Thành tiền + Phí vận chuyển
-        // ==========================================
         double tongTienNhap = thanhTien + phiVanChuyen;
 
         // ==========================================
-        // HIỂN THỊ KẾT QUẢ RA MÀN HÌNH
+        // HIỂN THỊ THÔNG TIN VÀ KẾT QUẢ ĐÁNH GIÁ
         // ==========================================
         System.out.println("\n==================================================");
-        System.out.println("          KẾT QUẢ THỰC HIỆN NHẬP KHO SÁCH          ");
+        System.out.println("          KẾT QUẢ ĐÁNH GIÁ VÀ XỬ LÝ SÁCH          ");
         System.out.println("==================================================");
         System.out.println("- Mã sách         : " + maSach);
         System.out.println("- Tên sách        : " + tenSach);
         System.out.println("- Tác giả         : " + tacGia);
+        System.out.println("- Loại sách       : " + tenLoaiSach); // Kết quả Bài 4[cite: 5]
         System.out.println("- Năm xuất bản    : " + namXuatBan);
         System.out.println("- Đơn giá         : " + donGia);
         System.out.println("- Số lượng        : " + soLuong);
+        System.out.println("- Thành tiền      : " + thanhTien);
+        System.out.println("- Phí vận chuyển  : " + phiVanChuyen);
+        System.out.println("- Tổng tiền nhập  : " + tongTienNhap);
         System.out.println("--------------------------------------------------");
-        System.out.println("- Thành tiền      : " + thanhTien);     // Kết quả Bài 2[cite: 3]
-        System.out.println("- Phí vận chuyển  : " + phiVanChuyen);  // Kết quả Bài 3[cite: 3]
-        System.out.println("- Tổng tiền nhập  : " + tongTienNhap);  // Kết quả Bài 4[cite: 3]
+
+        // ==========================================
+        // BÀI 1: Kiểm tra giá > 0, số lượng >= 0, năm xuất bản hợp lệ[cite: 5]
+        // ==========================================
+        int namHienTai = Year.now().getValue();
+        boolean hopLeGia = (donGia > 0);
+        boolean hopLeSoLuong = (soLuong >= 0);
+        boolean hopLeNamXB = (namXuatBan > 1000 && namXuatBan <= namHienTai);
+
+        System.out.println(">>> BÀI 1 - Kiểm tra tính hợp lệ:");
+        if (hopLeGia && hopLeSoLuong && hopLeNamXB) {
+            System.out.println("-> Trạng thái: Thông tin sách HỢP LỆ.");
+        } else {
+            System.out.println("-> Trạng thái: KHÔNG HỢP LỆ! (Kiểm tra lại: Đơn giá phải > 0, Số lượng >= 0, Năm XB hợp lệ).");
+        }
+
+        // ==========================================
+        // BÀI 2: Phân loại giá sách[cite: 5]
+        // ==========================================
+        System.out.println("\n>>> BÀI 2 - Phân loại giá sách:");
+        if (donGia < 50000) {
+            System.out.println("-> Phân loại: Sách giá thấp");
+        } else if (donGia <= 100000) {
+            System.out.println("-> Phân loại: Sách giá trung bình");
+        } else if (donGia <= 200000) {
+            System.out.println("-> Phân loại: Sách giá cao");
+        } else {
+            System.out.println("-> Phân loại: Sách giá đặc biệt");
+        }
+
+        // ==========================================
+        // BÀI 3: Phân loại tồn kho dựa vào số lượng[cite: 5]
+        // ==========================================
+        System.out.println("\n>>> BÀI 3 - Phân loại tồn kho:");
+        if (soLuong == 0) {
+            System.out.println("-> Tồn kho: Hết sách");
+        } else if (soLuong >= 1 && soLuong <= 5) {
+            System.out.println("-> Tồn kho: Sắp hết");
+        } else if (soLuong >= 6 && soLuong <= 20) {
+            System.out.println("-> Tồn kho: Còn ít");
+        } else {
+            System.out.println("-> Tồn kho: Còn nhiều");
+        }
         System.out.println("==================================================");
 
-        // Đóng đối tượng Scanner để giải phóng bộ nhớ và tài nguyên hệ thống
+        // Đóng đối tượng Scanner
         scanner.close();
     }
 }
