@@ -1,0 +1,169 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+// Lớp Sach áp dụng Tính chất Đóng gói 
+class Sach {
+    // Yêu cầu 1: Khai báo các thuộc tính với từ khóa private
+    private String maSach;
+    private String tieuDe;
+    private String tacGia;
+    private int namXuatBan;
+    private int soLuong;
+
+    // Constructor mặc định (không tham số)
+    public Sach() {
+    }
+
+    // Yêu cầu 4: Constructor có tham số đầy đủ
+    public Sach(String maSach, String tieuDe, String tacGia, int namXuatBan, int soLuong) {
+        this.maSach = maSach;
+        this.tieuDe = tieuDe;
+        this.tacGia = tacGia;
+        setNamXuatBan(namXuatBan); // Gọi setter để kiểm tra ràng buộc
+        setSoLuong(soLuong);       // Gọi setter để kiểm tra ràng buộc
+    }
+
+    // Yêu cầu 2 & 3: Các phương thức Getter và Setter có kiểm tra ràng buộc
+    public String getMaSach() {
+        return maSach;
+    }
+
+    public void setMaSach(String maSach) {
+        this.maSach = maSach;
+    }
+
+    public String getTieuDe() {
+        return tieuDe;
+    }
+
+    public void setTieuDe(String tieuDe) {
+        this.tieuDe = tieuDe;
+    }
+
+    public String getTacGia() {
+        return tacGia;
+    }
+
+    public void setTacGia(String tacGia) {
+        this.tacGia = tacGia;
+    }
+
+    public int getNamXuatBan() {
+        return namXuatBan;
+    }
+
+    public void setNamXuatBan(int namXuatBan) {
+        int currentYear = LocalDate.now().getYear(); // Lấy năm hiện tại (2026)
+        if (namXuatBan > 0 && namXuatBan <= currentYear) {
+            this.namXuatBan = namXuatBan;
+        } else {
+            System.out.println("=> Cảnh báo: Năm xuất bản (" + namXuatBan + ") không hợp lệ! (Phải từ 1 đến " + currentYear + ")");
+        }
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        if (soLuong >= 0) { // Yêu cầu 3: Đảm bảo số lượng không âm
+            this.soLuong = soLuong;
+        } else {
+            System.out.println("=> Cảnh báo: Số lượng (" + soLuong + ") không được là số âm!");
+        }
+    }
+
+    // Phương thức hiển thị thông tin chi tiết
+    public void hienThiThongTin() {
+        System.out.println("--------------------------------------------------");
+        System.out.println("Mã sách     : " + maSach);
+        System.out.println("Tiêu đề     : " + tieuDe);
+        System.out.println("Tác giả     : " + tacGia);
+        System.out.println("Năm xuất bản: " + namXuatBan);
+        System.out.println("Số lượng    : " + soLuong);
+        System.out.println("--------------------------------------------------");
+    }
+}
+
+// Lớp Test chứa hàm main quản lý danh sách
+public class Test {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Sach> danhSachSach = new ArrayList<>();
+        int luaChon;
+
+        do {
+            System.out.println("\n========== QUẢN LÝ THƯ VIỆN - BÀI THỰC HÀNH TUẦN 8 ==========");
+            System.out.println("1. Thêm một cuốn sách mới (Có kiểm tra Đóng gói)");
+            System.out.println("2. Hiển thị danh sách các cuốn sách");
+            System.out.println("3. Tìm kiếm sách theo mã sách");
+            System.out.println("4. Thoát chương trình");
+            System.out.print("Nhập lựa chọn của bạn (1-4): ");
+            luaChon = scanner.nextInt();
+            scanner.nextLine(); // Đọc bỏ dòng trống
+
+            switch (luaChon) {
+                case 1:
+                    System.out.println("\n--- NHẬP THÔNG TIN SÁCH MỚI ---");
+                    System.out.print("Nhập mã sách: ");
+                    String maSach = scanner.nextLine();
+                    System.out.print("Nhập tiêu đề sách: ");
+                    String tieuDe = scanner.nextLine();
+                    System.out.print("Nhập tên tác giả: ");
+                    String tacGia = scanner.nextLine();
+                    
+                    System.out.print("Nhập năm xuất bản: ");
+                    int namXuatBan = scanner.nextInt();
+                    
+                    System.out.print("Nhập số lượng: ");
+                    int soLuong = scanner.nextInt();
+                    scanner.nextLine(); // Đọc bỏ dòng trống
+
+                    // Sử dụng constructor đầy đủ tham số kết hợp bộ lọc setter
+                    Sach sachMoi = new Sach(maSach, tieuDe, tacGia, namXuatBan, soLuong);
+                    danhSachSach.add(sachMoi);
+                    System.out.println("=> Đã xử lý thêm sách vào danh sách!");
+                    break;
+
+                case 2:
+                    System.out.println("\n--- DANH SÁCH SÁCH TRONG THƯ VIỆN ---");
+                    if (danhSachSach.isEmpty()) {
+                        System.out.println("Thư viện hiện chưa có cuốn sách nào.");
+                    } else {
+                        for (Sach s : danhSachSach) {
+                            s.hienThiThongTin();
+                        }
+                    }
+                    break;
+
+                case 3:
+                    System.out.print("\nNhập mã sách cần tìm kiếm: ");
+                    String maTimKiem = scanner.nextLine();
+                    boolean found = false;
+                    for (Sach s : danhSachSach) {
+                        // Dùng getMaSach() vì thuộc tính đã chuyển sang private
+                        if (s.getMaSach().equalsIgnoreCase(maTimKiem)) {
+                            System.out.println("=> Đã tìm thấy sách:");
+                            s.hienThiThongTin();
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        System.out.println("=> Không tìm thấy cuốn sách có mã: " + maTimKiem);
+                    }
+                    break;
+
+                case 4:
+                    System.out.println("Đang thoát chương trình. Tạm biệt!");
+                    break;
+
+                default:
+                    System.out.println("Lựa chọn không hợp lệ! Vui lòng chọn từ 1 đến 4.");
+            }
+        } while (luaChon != 4);
+
+        scanner.close();
+    }
+}
